@@ -1,0 +1,13 @@
+Basic Actions [
+    Track Flow paths(concatenable points),
+    Terrain    
+]
+
+Views [
+    Mapped View(top, left, front) can be rotated out of view
+    + 3D view
+] - allow to easily rotate to direction and reset zoom
+
+Split views for multi-screen setup, or combined for single window app.
+
+

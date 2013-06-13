@@ -7,15 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE0884BF176A6C37006E2E43 /* Delaunay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE0884BE176A6C37006E2E43 /* Delaunay.cpp */; };
 		EE16A42E174BD9BC0049B82D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE16A42D174BD9BC0049B82D /* Cocoa.framework */; };
 		EE16A438174BD9BC0049B82D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE16A436174BD9BC0049B82D /* InfoPlist.strings */; };
 		EE16A43A174BD9BC0049B82D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16A439174BD9BC0049B82D /* main.m */; };
 		EE16A43E174BD9BC0049B82D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = EE16A43C174BD9BC0049B82D /* Credits.rtf */; };
-		EE16A441174BD9BC0049B82D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16A440174BD9BC0049B82D /* AppDelegate.m */; };
+		EE16A441174BD9BC0049B82D /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE16A440174BD9BC0049B82D /* AppDelegate.mm */; };
 		EE16A444174BD9BC0049B82D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE16A442174BD9BC0049B82D /* MainMenu.xib */; };
+		EE16A44B174BDB180049B82D /* notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = EE16A44A174BDB180049B82D /* notes.txt */; };
+		EE16A453174BDCA50049B82D /* ProjectedView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE16A452174BDCA50049B82D /* ProjectedView.mm */; };
+		EE16A456174BDF9D0049B82D /* CompositeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16A455174BDF9D0049B82D /* CompositeViewController.m */; };
+		EE16A459174BDFB20049B82D /* ToolbarViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE16A458174BDFB20049B82D /* ToolbarViewController.mm */; };
+		EE16A45C174C24650049B82D /* StatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16A45B174C24650049B82D /* StatusView.m */; };
+		EE16A45F174C2E8B0049B82D /* ProjectedViewsLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16A45E174C2E8B0049B82D /* ProjectedViewsLayoutController.m */; };
+		EE2919241762330F004F1041 /* Mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE2919231762330F004F1041 /* Mesh.mm */; };
+		EE291927176237C8004F1041 /* DHPolygon.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE291926176237C8004F1041 /* DHPolygon.mm */; };
+		EE531B091761332700051D70 /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE531B081761332700051D70 /* Scene.mm */; };
+		EE9AF9C1175FAD6100A51B0F /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE9AF9C0175FAD5800A51B0F /* utils.mm */; };
+		EE9FA981175E872B004E80E6 /* Octree.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE9FA980175E872B004E80E6 /* Octree.mm */; };
+		EEBCFEF9174D36EF00003869 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBCFEF8174D36EF00003869 /* OpenGL.framework */; };
+		EEBCFEFB174D36F400003869 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBCFEFA174D36F400003869 /* GLUT.framework */; };
+		EECB6A15175FE0FF00D0B3E0 /* Node.mm in Sources */ = {isa = PBXBuildFile; fileRef = EECB6A14175FE0FF00D0B3E0 /* Node.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE0884BE176A6C37006E2E43 /* Delaunay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Delaunay.cpp; sourceTree = "<group>"; };
 		EE16A42A174BD9BC0049B82D /* TrackBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE16A42D174BD9BC0049B82D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		EE16A430174BD9BC0049B82D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -27,8 +43,34 @@
 		EE16A43B174BD9BC0049B82D /* TrackBuilder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrackBuilder-Prefix.pch"; sourceTree = "<group>"; };
 		EE16A43D174BD9BC0049B82D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		EE16A43F174BD9BC0049B82D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EE16A440174BD9BC0049B82D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EE16A440174BD9BC0049B82D /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		EE16A443174BD9BC0049B82D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		EE16A44A174BDB180049B82D /* notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
+		EE16A451174BDCA50049B82D /* ProjectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectedView.h; sourceTree = "<group>"; };
+		EE16A452174BDCA50049B82D /* ProjectedView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProjectedView.mm; sourceTree = "<group>"; };
+		EE16A454174BDF9D0049B82D /* CompositeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeViewController.h; sourceTree = "<group>"; };
+		EE16A455174BDF9D0049B82D /* CompositeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompositeViewController.m; sourceTree = "<group>"; };
+		EE16A457174BDFB20049B82D /* ToolbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolbarViewController.h; sourceTree = "<group>"; };
+		EE16A458174BDFB20049B82D /* ToolbarViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ToolbarViewController.mm; sourceTree = "<group>"; };
+		EE16A45A174C24650049B82D /* StatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusView.h; sourceTree = "<group>"; };
+		EE16A45B174C24650049B82D /* StatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusView.m; sourceTree = "<group>"; };
+		EE16A45D174C2E8B0049B82D /* ProjectedViewsLayoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectedViewsLayoutController.h; sourceTree = "<group>"; };
+		EE16A45E174C2E8B0049B82D /* ProjectedViewsLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectedViewsLayoutController.m; sourceTree = "<group>"; };
+		EE2919221762330F004F1041 /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		EE2919231762330F004F1041 /* Mesh.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Mesh.mm; sourceTree = "<group>"; };
+		EE291925176237C7004F1041 /* DHPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHPolygon.h; sourceTree = "<group>"; };
+		EE291926176237C8004F1041 /* DHPolygon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DHPolygon.mm; sourceTree = "<group>"; };
+		EE291929176248E0004F1041 /* Delaunay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delaunay.h; sourceTree = "<group>"; };
+		EE531B071761332700051D70 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		EE531B081761332700051D70 /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
+		EE9AF9BF175FAD4E00A51B0F /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		EE9AF9C0175FAD5800A51B0F /* utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
+		EE9FA97F175E872B004E80E6 /* Octree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Octree.h; sourceTree = "<group>"; };
+		EE9FA980175E872B004E80E6 /* Octree.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Octree.mm; sourceTree = "<group>"; };
+		EEBCFEF8174D36EF00003869 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		EEBCFEFA174D36F400003869 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		EECB6A13175FE0FF00D0B3E0 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		EECB6A14175FE0FF00D0B3E0 /* Node.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Node.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEBCFEFB174D36F400003869 /* GLUT.framework in Frameworks */,
+				EEBCFEF9174D36EF00003869 /* OpenGL.framework in Frameworks */,
 				EE16A42E174BD9BC0049B82D /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,6 +92,7 @@
 			children = (
 				EE16A433174BD9BC0049B82D /* TrackBuilder */,
 				EE16A42C174BD9BC0049B82D /* Frameworks */,
+				EE29192C1762E3DB004F1041 /* libs */,
 				EE16A42B174BD9BC0049B82D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +108,8 @@
 		EE16A42C174BD9BC0049B82D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EEBCFEFA174D36F400003869 /* GLUT.framework */,
+				EEBCFEF8174D36EF00003869 /* OpenGL.framework */,
 				EE16A42D174BD9BC0049B82D /* Cocoa.framework */,
 				EE16A42F174BD9BC0049B82D /* Other Frameworks */,
 			);
@@ -82,10 +129,15 @@
 		EE16A433174BD9BC0049B82D /* TrackBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				EE9FA97E175E8717004E80E6 /* Scene */,
+				EE16A44D174BDC0B0049B82D /* Actions */,
+				EE16A44C174BDBF70049B82D /* Views */,
+				EE9AF9BE175FAD4500A51B0F /* Misc */,
 				EE16A43F174BD9BC0049B82D /* AppDelegate.h */,
-				EE16A440174BD9BC0049B82D /* AppDelegate.m */,
+				EE16A440174BD9BC0049B82D /* AppDelegate.mm */,
 				EE16A442174BD9BC0049B82D /* MainMenu.xib */,
 				EE16A434174BD9BC0049B82D /* Supporting Files */,
+				EE16A44A174BDB180049B82D /* notes.txt */,
 			);
 			path = TrackBuilder;
 			sourceTree = "<group>";
@@ -100,6 +152,97 @@
 				EE16A43C174BD9BC0049B82D /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EE16A44C174BDBF70049B82D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EEBCFEF7174D363500003869 /* Workspace */,
+				EEBCFEF6174D362A00003869 /* Main */,
+				EEBCFEF5174D361700003869 /* Accessory */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		EE16A44D174BDC0B0049B82D /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Actions;
+			sourceTree = "<group>";
+		};
+		EE291928176237D3004F1041 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				EE2919221762330F004F1041 /* Mesh.h */,
+				EE2919231762330F004F1041 /* Mesh.mm */,
+				EE291925176237C7004F1041 /* DHPolygon.h */,
+				EE291926176237C8004F1041 /* DHPolygon.mm */,
+				EE291929176248E0004F1041 /* Delaunay.h */,
+				EE0884BE176A6C37006E2E43 /* Delaunay.cpp */,
+			);
+			name = Mesh;
+			sourceTree = "<group>";
+		};
+		EE29192C1762E3DB004F1041 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		EE9AF9BE175FAD4500A51B0F /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				EE9AF9BF175FAD4E00A51B0F /* utils.h */,
+				EE9AF9C0175FAD5800A51B0F /* utils.mm */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		EE9FA97E175E8717004E80E6 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				EE291928176237D3004F1041 /* Mesh */,
+				EE9FA97F175E872B004E80E6 /* Octree.h */,
+				EE9FA980175E872B004E80E6 /* Octree.mm */,
+				EECB6A13175FE0FF00D0B3E0 /* Node.h */,
+				EECB6A14175FE0FF00D0B3E0 /* Node.mm */,
+				EE531B071761332700051D70 /* Scene.h */,
+				EE531B081761332700051D70 /* Scene.mm */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		EEBCFEF5174D361700003869 /* Accessory */ = {
+			isa = PBXGroup;
+			children = (
+				EE16A457174BDFB20049B82D /* ToolbarViewController.h */,
+				EE16A458174BDFB20049B82D /* ToolbarViewController.mm */,
+				EE16A45A174C24650049B82D /* StatusView.h */,
+				EE16A45B174C24650049B82D /* StatusView.m */,
+			);
+			name = Accessory;
+			sourceTree = "<group>";
+		};
+		EEBCFEF6174D362A00003869 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				EE16A454174BDF9D0049B82D /* CompositeViewController.h */,
+				EE16A455174BDF9D0049B82D /* CompositeViewController.m */,
+				EE16A45D174C2E8B0049B82D /* ProjectedViewsLayoutController.h */,
+				EE16A45E174C2E8B0049B82D /* ProjectedViewsLayoutController.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		EEBCFEF7174D363500003869 /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				EE16A451174BDCA50049B82D /* ProjectedView.h */,
+				EE16A452174BDCA50049B82D /* ProjectedView.mm */,
+			);
+			name = Workspace;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +299,7 @@
 				EE16A438174BD9BC0049B82D /* InfoPlist.strings in Resources */,
 				EE16A43E174BD9BC0049B82D /* Credits.rtf in Resources */,
 				EE16A444174BD9BC0049B82D /* MainMenu.xib in Resources */,
+				EE16A44B174BDB180049B82D /* notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,7 +311,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE16A43A174BD9BC0049B82D /* main.m in Sources */,
-				EE16A441174BD9BC0049B82D /* AppDelegate.m in Sources */,
+				EE16A441174BD9BC0049B82D /* AppDelegate.mm in Sources */,
+				EE16A453174BDCA50049B82D /* ProjectedView.mm in Sources */,
+				EE16A456174BDF9D0049B82D /* CompositeViewController.m in Sources */,
+				EE16A459174BDFB20049B82D /* ToolbarViewController.mm in Sources */,
+				EE16A45C174C24650049B82D /* StatusView.m in Sources */,
+				EE16A45F174C2E8B0049B82D /* ProjectedViewsLayoutController.m in Sources */,
+				EE9FA981175E872B004E80E6 /* Octree.mm in Sources */,
+				EE9AF9C1175FAD6100A51B0F /* utils.mm in Sources */,
+				EECB6A15175FE0FF00D0B3E0 /* Node.mm in Sources */,
+				EE531B091761332700051D70 /* Scene.mm in Sources */,
+				EE2919241762330F004F1041 /* Mesh.mm in Sources */,
+				EE291927176237C8004F1041 /* DHPolygon.mm in Sources */,
+				EE0884BF176A6C37006E2E43 /* Delaunay.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,9 +384,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/libs;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -255,8 +414,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/libs;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -303,6 +465,7 @@
 				EE16A449174BD9BC0049B82D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
