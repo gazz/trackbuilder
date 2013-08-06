@@ -162,6 +162,22 @@
 }
 
 
+- (BOOL)decreaseDetail
+{
+  if (_childNodes.count) {
+    NSMutableArray *removableNodes = [NSMutableArray array];
+    for (Node *child in _childNodes) {
+      if (child.decreaseDetail) {
+        [removableNodes addObject:child];
+      }
+    }
+    [_childNodes removeObjectsInArray:removableNodes];
+    return NO;
+  }
+  return YES;
+}
+
+
 - (NSArray*)nodesHitByRay:(glm::vec3)ray origin:(glm::vec3)origin
 {
   NSMutableArray *nodesHit = [NSMutableArray array];

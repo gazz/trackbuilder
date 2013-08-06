@@ -39,6 +39,7 @@ struct {
 - (void)renderActiveBoundsInWorld;
 
 - (void)increaseDetail;
+- (BOOL)decreaseDetail;
 
 - (NSArray*)nodesHitByRay:(glm::vec3)ray origin:(glm::vec3)origin;
 

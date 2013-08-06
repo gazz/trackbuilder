@@ -10,6 +10,7 @@ BOOL equalVerts(glm::vec3 &v1, glm::vec3 &v2) {
 - (id)init
 {
   if (self = [super init]) {
+    _origin = glm::vec3(0);
     _vertices = [NSMutableArray array];
     _polygons = [NSMutableArray array];
   }
@@ -42,5 +43,6 @@ BOOL equalVerts(glm::vec3 &v1, glm::vec3 &v2) {
   }
   [_polygons addObject:[[DHPolygon alloc] initWithIndices:v1Index i2:v2Index i3:v3Index]];
 }
+
 
 @end

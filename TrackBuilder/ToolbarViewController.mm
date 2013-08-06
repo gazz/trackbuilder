@@ -92,11 +92,17 @@
     [DHApp.scene generateTerrain:CGSizeMake(3, 3)];
   }];
 
-  [self addToolbarButton:@"Add triangle" action:^(DHButton *button) {
-//    Triangle t;
-//    t.v1 =
-//    [DHApp.scene addTriangle:Triangle(glm::vec3(0,0,0), glm::vec3(0,0,1), glm::vec3(1,0,0), glm::vec3(0,1,0))];
+  
+  
+  [self addToolbarButton:@"Decrease detail" action:^(DHButton *button) {
+    [DHApp.scene.octree decreaseDetail];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
   }];
+  [self addToolbarButton:@"Increase detail" action:^(DHButton *button) {
+    [DHApp.scene.octree increaseDetail];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
+  }];
+
 
 }
 

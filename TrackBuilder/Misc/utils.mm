@@ -2,6 +2,19 @@
 #import "utils.h"
 
 
+
+@implementation RedView
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+  [[NSColor blueColor] set];
+  NSRectFill(self.bounds);
+  [[NSColor redColor] set];
+  NSRectFill(NSInsetRect(self.bounds, 3, 3));
+}
+
+@end
+
 NSString *toString(glm::vec3 &vec3)
 {
   return [NSString stringWithFormat:@"(%.2f, %.2f, %.2f)", vec3.x, vec3.y, vec3.z];

@@ -51,9 +51,9 @@
     if (self) {
       _views = @[
                  [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
-                 [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
-                 [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
-                 [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
+//                 [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
+//                 [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
+//                 [[ProjectedView alloc] initWithFrame:NSZeroRect openGLContext:glContext],
                  ];
     }
     
@@ -63,7 +63,7 @@
 - (void)loadView
 {
   self.view = [[LayoutBackgroundView alloc] initWithFrame:NSZeroRect delegate:self];
-  
+
   [self layoutViews];
 }
 

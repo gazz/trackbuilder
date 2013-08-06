@@ -22,6 +22,7 @@
 		EE16A45F174C2E8B0049B82D /* ProjectedViewsLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16A45E174C2E8B0049B82D /* ProjectedViewsLayoutController.m */; };
 		EE2919241762330F004F1041 /* Mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE2919231762330F004F1041 /* Mesh.mm */; };
 		EE291927176237C8004F1041 /* DHPolygon.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE291926176237C8004F1041 /* DHPolygon.mm */; };
+		EE3CD3A11774C5BC00CDDFA9 /* OverlayControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3CD3A01774C5BC00CDDFA9 /* OverlayControlsView.m */; };
 		EE531B091761332700051D70 /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE531B081761332700051D70 /* Scene.mm */; };
 		EE9AF9C1175FAD6100A51B0F /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE9AF9C0175FAD5800A51B0F /* utils.mm */; };
 		EE9FA981175E872B004E80E6 /* Octree.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE9FA980175E872B004E80E6 /* Octree.mm */; };
@@ -61,6 +62,8 @@
 		EE291925176237C7004F1041 /* DHPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHPolygon.h; sourceTree = "<group>"; };
 		EE291926176237C8004F1041 /* DHPolygon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DHPolygon.mm; sourceTree = "<group>"; };
 		EE291929176248E0004F1041 /* Delaunay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delaunay.h; sourceTree = "<group>"; };
+		EE3CD39F1774C5BC00CDDFA9 /* OverlayControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayControlsView.h; sourceTree = "<group>"; };
+		EE3CD3A01774C5BC00CDDFA9 /* OverlayControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayControlsView.m; sourceTree = "<group>"; };
 		EE531B071761332700051D70 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		EE531B081761332700051D70 /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
 		EE9AF9BF175FAD4E00A51B0F /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
@@ -241,6 +244,8 @@
 			children = (
 				EE16A451174BDCA50049B82D /* ProjectedView.h */,
 				EE16A452174BDCA50049B82D /* ProjectedView.mm */,
+				EE3CD39F1774C5BC00CDDFA9 /* OverlayControlsView.h */,
+				EE3CD3A01774C5BC00CDDFA9 /* OverlayControlsView.m */,
 			);
 			name = Workspace;
 			sourceTree = "<group>";
@@ -324,6 +329,7 @@
 				EE2919241762330F004F1041 /* Mesh.mm in Sources */,
 				EE291927176237C8004F1041 /* DHPolygon.mm in Sources */,
 				EE0884BF176A6C37006E2E43 /* Delaunay.cpp in Sources */,
+				EE3CD3A11774C5BC00CDDFA9 /* OverlayControlsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

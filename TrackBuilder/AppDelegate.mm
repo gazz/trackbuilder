@@ -29,8 +29,8 @@
   
   self.rootViewController = [[CompositeViewController alloc] initWithRootGLContext:rootGLContext];
   self.window = [self spawnWindowWithTitle:@"Yeehaa" autosaveName:@"Main"];
-  self.window.contentView = self.rootViewController.view;
   [self.window makeKeyAndOrderFront:nil];
+  self.window.contentView = self.rootViewController.view;
   
 }
 

@@ -1,9 +1,9 @@
 #import <Cocoa/Cocoa.h>
 
 typedef NS_ENUM(NSInteger, ProjectedViewOrientation) {
-  ProjectedViewOrientationTop,
-  ProjectedViewOrientationLeft,
-  ProjectedViewOrientationFront,
+  ProjectedViewOrtoTop,
+  ProjectedViewOrtoLeft,
+  ProjectedViewOrtoFront,
   ProjectedViewOrientationCustom,
   ProjectedViewOrientationsCount
 };

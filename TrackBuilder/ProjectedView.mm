@@ -11,20 +11,9 @@
 #import "Scene.h"
 #import "utils.h"
 
+#import "OverlayControlsView.h"
+
 #define FAST_TRANSFORM_SCALE 10
-
-
-typedef struct {
-  CGFloat distance;
-  glm::quat rotation;
-  glm::vec3 center;
-} ProjectionViewCamera;
-
-typedef struct {
-  glm::vec3 origin;
-  glm::vec3 direction;
-} Ray;
-
 
 @interface ProjectedView ()
 
@@ -45,6 +34,8 @@ typedef struct {
   glm::vec3 _screenV;
   
   NSTrackingRectTag _trackingRect;
+  NSWindow *_overlayControlsWindow;
+  OverlayControlsView *_controlsView;
 }
 
 
@@ -73,6 +64,48 @@ typedef struct {
   return self;
 }
 
+
+- (CGRect)overlayFrameSize:(NSWindow *)window
+{
+  CGRect wRect = window.frame;
+  NSView *contentView  = self;
+  CGRect cRect = contentView.frame;
+  
+  if (contentView.superview.superview.isFlipped) {
+    CGRect superFrame = contentView.superview.frame;
+    cRect.origin.y = contentView.superview.superview.frame.size.height - cRect.size.height - cRect.origin.y - superFrame.origin.y;
+    cRect.size.width -= 1;
+  }
+  
+  CGRect rect = CGRectMake(wRect.origin.x + cRect.origin.x, wRect.origin.y + cRect.origin.y, cRect.size.width, cRect.size.height);
+  return rect;
+}
+
+
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
+{
+  if ( [self window] && _trackingRect ) {
+    [self removeTrackingRect:_trackingRect];
+  }
+
+  if (_overlayControlsWindow) [_overlayControlsWindow orderOut:nil];
+  
+  CGRect rect = [self overlayFrameSize:newWindow];
+  _overlayControlsWindow = [[NSWindow alloc]initWithContentRect:rect
+                                                       styleMask:NSBorderlessWindowMask
+                                                         backing:NSBackingStoreBuffered
+                                                           defer:NO];
+
+  _overlayControlsWindow.backgroundColor = [NSColor clearColor];
+  _overlayControlsWindow.opaque = NO;
+  
+  _controlsView = [[OverlayControlsView alloc] initWithFrame:NSZeroRect];
+  _overlayControlsWindow.contentView = _controlsView;
+  
+  [newWindow addChildWindow:_overlayControlsWindow ordered:NSWindowAbove];
+}
+
+
 - (Scene*) scene
 {
   return DHApp.scene;
@@ -88,13 +121,8 @@ typedef struct {
   [super setFrame:frame];
   [self removeTrackingRect:_trackingRect];
   _trackingRect = [self addTrackingRect:self.bounds owner:self userData:NULL assumeInside:NO];
-}
-
--(void)viewWillMoveToWindow:(NSWindow *)newWindow
-{
-  if ( [self window] && _trackingRect ) {
-    [self removeTrackingRect:_trackingRect];
-  }
+  
+  [_overlayControlsWindow setFrame:[self overlayFrameSize:self.window] display:YES];
 }
 
 
@@ -158,6 +186,9 @@ typedef struct {
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+  NSDate *date = [NSDate date];
+  
+  
 //  if (_openGLContext.view != self) {
 //    NSLog(@"View: %@ against view: %@", _openGLContext.view, self);
     [_openGLContext setView:self];
@@ -215,6 +246,29 @@ typedef struct {
 
   
   glFlush();
+  
+  double timePassed_ms = [date timeIntervalSinceNow] * -1000.0;
+  _controlsView.basicTextField.stringValue = [self statisticsTextForPassedTime:timePassed_ms];
+}
+
+
+- (NSString*)statisticsTextForPassedTime:(double)passedMs
+{
+  static int index = 0;
+  const int maxFramesAverage = 50;
+  static double framesToAverage[maxFramesAverage];
+  
+  framesToAverage[index++] = passedMs;
+  if (index >= maxFramesAverage)
+    index = 0;
+
+  double amountedTime = 0;
+  for (int i = 0; i < maxFramesAverage; ++i) {
+    amountedTime += framesToAverage[i];
+  }
+  int fps = 1000 / amountedTime * maxFramesAverage;
+  
+  return [NSString stringWithFormat:@"render took %f miliseconds, FPS: %d", passedMs, fps];
 }
 
 
@@ -450,11 +504,11 @@ typedef struct {
 - (NSString*)stringForOrientation
 {
   switch (self.orientation) {
-    case ProjectedViewOrientationTop:
+    case ProjectedViewOrtoTop:
       return @"Top View";
-    case ProjectedViewOrientationLeft:
+    case ProjectedViewOrtoLeft:
       return @"Left View";
-    case ProjectedViewOrientationFront:
+    case ProjectedViewOrtoFront:
       return @"Front View";
     case ProjectedViewOrientationCustom:
     default:

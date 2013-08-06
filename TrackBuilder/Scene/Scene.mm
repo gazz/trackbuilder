@@ -3,6 +3,7 @@
 
 #import "Delaunay.h"
 
+
 NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
 
 @implementation Scene
@@ -10,8 +11,6 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
 - (id)init
 {
   if (self = [super init]) {
-    CGFloat initialSize = 3;
-    _octree = [[Octree alloc] initWithParent:nil origin:glm::vec3(0) size:glm::vec3(initialSize)];
     _meshes = [NSMutableDictionary dictionary];
   }
   return self;
@@ -27,17 +26,20 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   
   vertexSet vertices;
   int segments = 5;
+//  float offset = (float)segments / 2;
+  float offset = (float)segments / 3;
   for (int i = 0; i < segments+1; ++i) {
     if (!i%2) {
       for (int j = 0; j < segments+1; ++j) {
-        vertices.insert(vertex(i, j));
+        vertices.insert(vertex(i-offset, j-offset));
       }
     } else {
       for (int j = segments; j >= 0; --j) {
-        vertices.insert(vertex(i, j));
+        vertices.insert(vertex(i-offset, j-offset));
       }
     }
   }
+
 
   triangleSet triangles;
   
@@ -55,6 +57,8 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   }
 
   [_meshes setValue:terrainMesh forKey:@"terrain"];
+  
+  [self recalculateOctree];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
 }
@@ -104,10 +108,20 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   [_octree renderBounds];
 }
 
+
+//- (*)
+
+
 - (BOOL)pickNodeWithRay:(glm::vec3)ray origin:(glm::vec3)origin
 {
+  for (Mesh *mesh in _meshes.allValues) {
+    for (DHPolygon *poly in mesh.polygons) {
+      // check if ray hits it
+    }
+  }
+  
   if ([_octree pickNodeWithRay:ray origin:origin]) {
-    NSArray *nodesHit = _octree.nodesHitByRay;
+    //NSArray *nodesHit = _octree.nodesHitByRay;
     // use nodes hit to filter meshes and their vertices
     return YES;
   }
@@ -115,5 +129,41 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
 }
 
 
+
+- (void)recalculateOctree
+{
+  NSLog(@"recalculating octree brute force");
+  // calc the bounds & make it the source
+  const CGFloat HUGE_NUM = 100000;
+  CGFloat minX(HUGE_NUM), minY(HUGE_NUM), minZ(HUGE_NUM),
+    maxX(-HUGE_NUM), maxY(-HUGE_NUM), maxZ(-HUGE_NUM);
+  
+  for (Mesh *mesh in _meshes.allValues) {
+    NSArray *vertices = mesh.vertices;
+    for (DHPolygon *poly in mesh.polygons) {
+      for (NSNumber *index in [poly indexes]) {
+        glm::vec3 vertex = UNWRAP_V3(vertices[index.integerValue]);
+        // min point
+        minX = vertex.x < minX ? vertex.x : minX;
+        minY = vertex.y < minY ? vertex.y : minY;
+        minZ = vertex.z < minZ ? vertex.z : minZ;
+
+        // max point
+        maxX = vertex.x > maxX ? vertex.x : maxX;
+        maxY = vertex.y > maxY ? vertex.y : maxY;
+        maxZ = vertex.z > maxZ ? vertex.z : maxZ;
+      }
+    }
+  }
+  
+  // calc size
+  CGFloat sizeX = maxX - minX;
+  CGFloat sizeY = maxY - minY;
+  CGFloat sizeZ = maxZ - minZ;
+  CGFloat size = MAX(MAX(sizeX, sizeY), sizeZ);
+  
+  _octree = [[Octree alloc] initWithParent:nil origin:glm::vec3(0) size:glm::vec3(size)];
+
+}
 
 @end
