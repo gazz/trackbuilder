@@ -3,6 +3,17 @@
 #import <glm/gtc/type_ptr.hpp>
 
 
+typedef NS_ENUM(NSInteger, BBCorner) {
+  BottomNorthEast,
+  BottomSouthEast,
+  BottomSouthWest,
+  BottomNorthWest,
+  TopNorthEast,
+  TopSouthEast,
+  TopSouthWest,
+  TopNorthWest
+};
+
 
 @interface BoundingBox : NSObject
 
@@ -13,8 +24,19 @@
 @property (readonly) glm::vec3 max;
 
 - (id)initWithOrigin:(glm::vec3)origin size:(glm::vec3)size;
+- (id)initWithMin:(glm::vec3)min max:(glm::vec3)max;
+
+- (instancetype)boundingBoxForTransform:(glm::mat4)transform;
 
 @end
+
+
+@interface BoundingBox (Expand)
+
+- (BoundingBox *)bbByAppendingBB:(BoundingBox *)otherBB;
+
+@end
+
 
 @interface BoundingBox (Render)
 

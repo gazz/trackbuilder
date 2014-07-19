@@ -35,6 +35,7 @@ void wireBox(glm::vec3 from, glm::vec3 to);
 
 glm::vec3 minPoint(glm::vec3 *vertices, int count);
 glm::vec3 maxPoint(glm::vec3 *vertices, int count);
+glm::vec3 transformV3(glm::vec3 v, glm::mat4 m);
 
 
 @interface RedView : NSView

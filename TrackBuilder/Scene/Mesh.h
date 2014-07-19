@@ -1,6 +1,5 @@
 #import "DHPolygon.h"
-#import "Octree.h"
-#import "AABB.h"
+#import "BoundingBox.h"
 
 
 @interface Mesh : NSObject
@@ -15,3 +14,6 @@
 - (void)addTriangleWithV1:(glm::vec3)v1 v2:(glm::vec3)v2 v3:(glm::vec3)v3;
 
 @end
+
+
+#import "Mesh+Primitives.h"

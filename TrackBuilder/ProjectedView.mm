@@ -36,6 +36,8 @@
   NSTrackingRectTag _trackingRect;
   NSWindow *_overlayControlsWindow;
   OverlayControlsView *_controlsView;
+  
+  double _rayCastTime;
 }
 
 
@@ -205,7 +207,7 @@
   
   [self drawGrid];
 
-  [self.scene renderMeshes];
+  [self.scene renderNodes];
 
   [self.scene renderBounds];
   
@@ -268,7 +270,7 @@
   }
   int fps = 1000 / amountedTime * maxFramesAverage;
   
-  return [NSString stringWithFormat:@"render took %f miliseconds, FPS: %d", passedMs, fps];
+  return [NSString stringWithFormat:@"render took %f miliseconds, FPS: %d, rayCastTime: %.3f ms", passedMs, fps, _rayCastTime];
 }
 
 
@@ -451,7 +453,8 @@
 
 -(void) calculatePointerRay:(CGPoint)point
 {
-  //NSLog(@"mouse location: [%f, %f]", point.x, point.y);
+  NSDate *date = [NSDate date];
+ //NSLog(@"mouse location: [%f, %f]", point.x, point.y);
   
   NSRect sceneBounds = [ self bounds ];
   
@@ -489,6 +492,7 @@
   [self setNeedsDisplay:YES];
   
   static BOOL objInFocus = NO;
+
   if ([self.scene pickNodeWithRay:_ray.direction origin:_ray.origin]) {
     if (!objInFocus) {
       objInFocus = YES;
@@ -498,6 +502,7 @@
     objInFocus = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:self];
   }
+  _rayCastTime = [date timeIntervalSinceNow] * -1000.0;
 }
 
 

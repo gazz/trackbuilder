@@ -157,3 +157,10 @@ glm::vec3 maxPoint(glm::vec3 *vertices, int count)
 }
 
 
+glm::vec3 transformV3(glm::vec3 v, glm::mat4 m)
+{
+  glm::vec4 transformedCorner = m * glm::vec4(v.x, v.y, v.z, 1.0f);
+  return glm::vec3(transformedCorner.x, transformedCorner.y, transformedCorner.z);
+}
+
+

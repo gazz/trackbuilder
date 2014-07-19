@@ -9,7 +9,6 @@
 #import "ToolbarViewController.h"
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
-#import "Octree.h"
 
 #define COLORMAINTOP [NSColor colorWithDeviceRed:0.886 green:0.886 blue:0.886 alpha:1.00]
 #define COLORMAINSTART [NSColor colorWithDeviceRed:0.812 green:0.812 blue:0.812 alpha:1.00]
@@ -91,15 +90,11 @@
   [self addToolbarButton:@"Generate Terrain" action:^(DHButton *button) {
     [DHApp.scene generateTerrain:CGSizeMake(1, 1)];
   }];
-
-  
   
   [self addToolbarButton:@"Decrease detail" action:^(DHButton *button) {
-    [DHApp.scene.octree decreaseDetail];
     [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
   }];
   [self addToolbarButton:@"Increase detail" action:^(DHButton *button) {
-    [DHApp.scene.octree increaseDetail];
     [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
   }];
 
