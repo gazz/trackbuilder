@@ -1,7 +1,9 @@
 #import "Scene.h"
 #import "AppDelegate.h"
-
+#import <OpenGL/gl.h>
 #import "Delaunay.h"
+#import "NSValue+vec3.h"
+#import "RayCast.h"
 
 
 NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
@@ -15,6 +17,7 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   }
   return self;
 }
+
 
 - (void)generateTerrain:(CGSize)size
 {
@@ -58,10 +61,11 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
 
   [_meshes setValue:terrainMesh forKey:@"terrain"];
   
-  [self recalculateOctree];
+//  [self recalculateOctree];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
 }
+
 
 - (void)renderMeshes
 {
@@ -85,12 +89,12 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
       
       if (DHApp.debugMode > NO_DEBUG) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glPolygonOffset( -1.0, 1.0 );
+        glPolygonOffset(self.pickedPolygon == poly ? -2.0 : -1.0, 1.0 );
         glEnable(GL_POLYGON_OFFSET_LINE);
 
         glBegin(poly.indexes.count==3 ? GL_TRIANGLES : GL_QUADS);
         {
-          glColor3f(1, 1, 0);
+          glColor3f(1, self.pickedPolygon == poly ? 0 : 1, 0);
           for (NSNumber *index in poly.indexes) {
             glm::vec3 v = UNWRAP_V3(mesh.vertices[index.intValue]);
             glVertex3f(v.x, v.y, v.z);
@@ -100,8 +104,10 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
         glDisable(GL_POLYGON_OFFSET_LINE);
       }
     }
+    [mesh.obb renderBBWithColor:mesh == self.pickedMesh ? [NSColor redColor] : [NSColor greenColor]];
   }
 }
+
 
 - (void)renderBounds
 {
@@ -109,14 +115,39 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
 }
 
 
-//- (*)
-
-
 - (BOOL)pickNodeWithRay:(glm::vec3)ray origin:(glm::vec3)origin
 {
+  self.pickedMesh = nil;
+  self.pickedPolygon = nil;
   for (Mesh *mesh in _meshes.allValues) {
-    for (DHPolygon *poly in mesh.polygons) {
-      // check if ray hits it
+    CGFloat closestHit = 1000000;
+    BoundingBox *aabb = mesh.obb;
+    CGFloat distanceToMesh = rayDistanceToBox(ray, origin, aabb.min, aabb.max);
+    if (distanceToMesh > 0 && distanceToMesh < closestHit) {
+      closestHit = distanceToMesh;
+      self.pickedMesh = mesh;
+    }
+  }
+  
+  for (DHPolygon *poly in self.pickedMesh.polygons) {
+    CGFloat closestHit = 1000000;
+    
+    CGFloat distanceToNode = -1;
+    if (poly.indexes.count == 3) {
+      distanceToNode = rayDistanceToTriangle(ray, origin,
+                                             UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[0] intValue]]),
+                                             UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[1] intValue]]),
+                                             UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[2] intValue]]));
+    } else if (poly.indexes.count == 4) {
+      distanceToNode = rayDistanceToQuad(ray, origin,
+                                         UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[0] intValue]]),
+                                         UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[1] intValue]]),
+                                         UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[2] intValue]]),
+                                         UNWRAP_V3(self.pickedMesh.vertices[[poly.indexes[3] intValue]]));
+    }
+    if (distanceToNode > 0 && distanceToNode < closestHit) {
+      closestHit = distanceToNode;
+      self.pickedPolygon = poly;
     }
   }
   
@@ -127,7 +158,6 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   }
   return NO;
 }
-
 
 
 - (void)recalculateOctree
@@ -163,7 +193,6 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   CGFloat size = MAX(MAX(sizeX, sizeY), sizeZ);
   
   _octree = [[Octree alloc] initWithParent:nil origin:glm::vec3(0) size:glm::vec3(size)];
-
 }
 
 @end

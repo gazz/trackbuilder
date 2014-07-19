@@ -1,5 +1,6 @@
 
 #import "utils.h"
+#import <OpenGL/gl.h>
 
 
 
@@ -127,6 +128,32 @@ void daBox(glm::vec3 from, glm::vec3 to)
     glVertex3f(from.x, from.y, to.z);
   }
   glEnd();
+}
+
+
+glm::vec3 minPoint(glm::vec3 *vertices, int count)
+{
+  glm::vec3 minPoint = vertices[0];
+  for (int i = 1; i < count; ++i) {
+    glm::vec3 v = vertices[i];
+    minPoint.x = fmin(v.x, minPoint.x);
+    minPoint.y = fmin(v.y, minPoint.y);
+    minPoint.z = fmin(v.z, minPoint.z);
+  }
+  return minPoint;
+}
+
+
+glm::vec3 maxPoint(glm::vec3 *vertices, int count)
+{
+  glm::vec3 maxPoint = vertices[0];
+  for (int i = 1; i < count; ++i) {
+    glm::vec3 v = vertices[i];
+    maxPoint.x = fmax(v.x, maxPoint.x);
+    maxPoint.y = fmax(v.y, maxPoint.y);
+    maxPoint.z = fmax(v.z, maxPoint.z);
+  }
+  return maxPoint;
 }
 
 

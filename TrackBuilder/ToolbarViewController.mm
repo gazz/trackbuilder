@@ -89,7 +89,7 @@
   }];
   
   [self addToolbarButton:@"Generate Terrain" action:^(DHButton *button) {
-    [DHApp.scene generateTerrain:CGSizeMake(3, 3)];
+    [DHApp.scene generateTerrain:CGSizeMake(1, 1)];
   }];
 
   

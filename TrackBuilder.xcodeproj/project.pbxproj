@@ -24,6 +24,10 @@
 		EE291927176237C8004F1041 /* DHPolygon.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE291926176237C8004F1041 /* DHPolygon.mm */; };
 		EE3CD3A11774C5BC00CDDFA9 /* OverlayControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3CD3A01774C5BC00CDDFA9 /* OverlayControlsView.m */; };
 		EE531B091761332700051D70 /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE531B081761332700051D70 /* Scene.mm */; };
+		EE745D8E197A759900A67288 /* AABB.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE745D8D197A759900A67288 /* AABB.mm */; };
+		EE745D91197A75E200A67288 /* NSValue+vec3.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE745D90197A75E200A67288 /* NSValue+vec3.mm */; };
+		EE745D97197A81BA00A67288 /* RayCast.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE745D96197A81BA00A67288 /* RayCast.mm */; };
+		EE745D9D197A8EC500A67288 /* Mesh+Suspension.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE745D9C197A8EC500A67288 /* Mesh+Suspension.mm */; };
 		EE9AF9C1175FAD6100A51B0F /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE9AF9C0175FAD5800A51B0F /* utils.mm */; };
 		EE9FA981175E872B004E80E6 /* Octree.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE9FA980175E872B004E80E6 /* Octree.mm */; };
 		EEBCFEF9174D36EF00003869 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBCFEF8174D36EF00003869 /* OpenGL.framework */; };
@@ -66,6 +70,14 @@
 		EE3CD3A01774C5BC00CDDFA9 /* OverlayControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayControlsView.m; sourceTree = "<group>"; };
 		EE531B071761332700051D70 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		EE531B081761332700051D70 /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
+		EE745D8C197A759900A67288 /* AABB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AABB.h; sourceTree = "<group>"; };
+		EE745D8D197A759900A67288 /* AABB.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AABB.mm; sourceTree = "<group>"; };
+		EE745D8F197A75E200A67288 /* NSValue+vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+vec3.h"; sourceTree = "<group>"; };
+		EE745D90197A75E200A67288 /* NSValue+vec3.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSValue+vec3.mm"; sourceTree = "<group>"; };
+		EE745D95197A81B000A67288 /* RayCast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RayCast.h; sourceTree = "<group>"; };
+		EE745D96197A81BA00A67288 /* RayCast.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RayCast.mm; sourceTree = "<group>"; };
+		EE745D9B197A8EC500A67288 /* Mesh+Suspension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mesh+Suspension.h"; sourceTree = "<group>"; };
+		EE745D9C197A8EC500A67288 /* Mesh+Suspension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Mesh+Suspension.mm"; sourceTree = "<group>"; };
 		EE9AF9BF175FAD4E00A51B0F /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		EE9AF9C0175FAD5800A51B0F /* utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
 		EE9FA97F175E872B004E80E6 /* Octree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Octree.h; sourceTree = "<group>"; };
@@ -177,12 +189,15 @@
 		EE291928176237D3004F1041 /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
+				EE745D92197A75E700A67288 /* Support */,
 				EE2919221762330F004F1041 /* Mesh.h */,
 				EE2919231762330F004F1041 /* Mesh.mm */,
 				EE291925176237C7004F1041 /* DHPolygon.h */,
 				EE291926176237C8004F1041 /* DHPolygon.mm */,
 				EE291929176248E0004F1041 /* Delaunay.h */,
 				EE0884BE176A6C37006E2E43 /* Delaunay.cpp */,
+				EE745D9B197A8EC500A67288 /* Mesh+Suspension.h */,
+				EE745D9C197A8EC500A67288 /* Mesh+Suspension.mm */,
 			);
 			name = Mesh;
 			sourceTree = "<group>";
@@ -192,6 +207,19 @@
 			children = (
 			);
 			path = libs;
+			sourceTree = "<group>";
+		};
+		EE745D92197A75E700A67288 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				EE745D8C197A759900A67288 /* AABB.h */,
+				EE745D8D197A759900A67288 /* AABB.mm */,
+				EE745D8F197A75E200A67288 /* NSValue+vec3.h */,
+				EE745D90197A75E200A67288 /* NSValue+vec3.mm */,
+				EE745D95197A81B000A67288 /* RayCast.h */,
+				EE745D96197A81BA00A67288 /* RayCast.mm */,
+			);
+			name = Support;
 			sourceTree = "<group>";
 		};
 		EE9AF9BE175FAD4500A51B0F /* Misc */ = {
@@ -319,9 +347,13 @@
 				EE16A441174BD9BC0049B82D /* AppDelegate.mm in Sources */,
 				EE16A453174BDCA50049B82D /* ProjectedView.mm in Sources */,
 				EE16A456174BDF9D0049B82D /* CompositeViewController.m in Sources */,
+				EE745D9D197A8EC500A67288 /* Mesh+Suspension.mm in Sources */,
 				EE16A459174BDFB20049B82D /* ToolbarViewController.mm in Sources */,
+				EE745D97197A81BA00A67288 /* RayCast.mm in Sources */,
 				EE16A45C174C24650049B82D /* StatusView.m in Sources */,
 				EE16A45F174C2E8B0049B82D /* ProjectedViewsLayoutController.m in Sources */,
+				EE745D91197A75E200A67288 /* NSValue+vec3.mm in Sources */,
+				EE745D8E197A759900A67288 /* AABB.mm in Sources */,
 				EE9FA981175E872B004E80E6 /* Octree.mm in Sources */,
 				EE9AF9C1175FAD6100A51B0F /* utils.mm in Sources */,
 				EECB6A15175FE0FF00D0B3E0 /* Node.mm in Sources */,

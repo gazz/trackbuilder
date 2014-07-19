@@ -1,6 +1,7 @@
 #import "Octree.h"
-#import <OpenGL/OpenGL.h>
 #import "AppDelegate.h"
+#import <OpenGL/OpenGL.h>
+#import <OpenGL/gl.h>
 
 @implementation Octree
 

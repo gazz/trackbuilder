@@ -1,9 +1,11 @@
 #import "Mesh.h"
+#import "NSValue+vec3.h"
 
 
 BOOL equalVerts(glm::vec3 &v1, glm::vec3 &v2) {
   return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z);
 }
+
 
 @implementation Mesh
 
@@ -42,6 +44,27 @@ BOOL equalVerts(glm::vec3 &v1, glm::vec3 &v2) {
     [_vertices addObject:WRAP_V3(v3)];
   }
   [_polygons addObject:[[DHPolygon alloc] initWithIndices:v1Index i2:v2Index i3:v3Index]];
+  
+  [self recalcOBB];
+}
+
+
+- (void)recalcOBB
+{
+  glm::vec3 minPoint = UNWRAP_V3([_vertices firstObject]);
+  glm::vec3 maxPoint = UNWRAP_V3([_vertices firstObject]);
+  for (NSValue *vertice in _vertices) {
+    glm::vec3 v = UNWRAP_V3(vertice);
+    minPoint.x = fmin(v.x, minPoint.x);
+    minPoint.y = fmin(v.y, minPoint.y);
+    minPoint.z = fmin(v.z, minPoint.z);
+    maxPoint.x = fmax(v.x, maxPoint.x);
+    maxPoint.y = fmax(v.y, maxPoint.y);
+    maxPoint.z = fmax(v.z, maxPoint.z);
+  }
+  glm::vec3 size = glm::vec3(maxPoint.x - minPoint.x, maxPoint.y - minPoint.y, maxPoint.z - minPoint.z);
+  glm::vec3 origin = glm::vec3(minPoint.x + size.x / 2, minPoint.y + size.y / 2, minPoint.z + size.z / 2);
+  _obb = [[BoundingBox alloc] initWithOrigin:origin size:size];
 }
 
 

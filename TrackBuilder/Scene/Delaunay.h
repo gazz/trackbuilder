@@ -72,158 +72,159 @@ public:
 	bool operator<(const vertex& v) const
 	{
 		if (m_Pnt.X == v.m_Pnt.X) return m_Pnt.Y < v.m_Pnt.Y;
-      return m_Pnt.X < v.m_Pnt.X;
-      }
-      
-      bool operator==(const vertex& v) const
-    {
-      return m_Pnt.X == v.m_Pnt.X && m_Pnt.Y == v.m_Pnt.Y;
+    return m_Pnt.X < v.m_Pnt.X;
+  }
+  
+  bool operator==(const vertex& v) const
+  {
+    return m_Pnt.X == v.m_Pnt.X && m_Pnt.Y == v.m_Pnt.Y;
+  }
+  
+  REAL GetX()	const	{ return m_Pnt.X; }
+  REAL GetY() const	{ return m_Pnt.Y; }
+  
+  void SetX(REAL x)		{ m_Pnt.X = x; }
+  void SetY(REAL y)		{ m_Pnt.Y = y; }
+  
+  const PointF& GetPoint() const		{ return m_Pnt; }
+  
+protected:
+  PointF	m_Pnt;
+};
+
+typedef set<vertex> vertexSet;
+typedef set<vertex>::iterator vIterator;
+typedef set<vertex>::const_iterator cvIterator;
+
+///////////////////
+// triangle
+
+class triangle
+{
+public:
+  triangle(const triangle& tri)
+  : m_Center(tri.m_Center)
+  , m_R(tri.m_R)
+  , m_R2(tri.m_R2)
+  {
+    for (int i = 0; i < 3; i++) m_Vertices[i] = tri.m_Vertices[i];
+  }
+  triangle(const vertex * p0, const vertex * p1, const vertex * p2)
+  {
+    m_Vertices[0] = p0;
+    m_Vertices[1] = p1;
+    m_Vertices[2] = p2;
+    SetCircumCircle();
+  }
+  triangle(const vertex * pV)
+  {
+    for (int i = 0; i < 3; i++) m_Vertices[i] = pV++;
+    SetCircumCircle();
+  }
+  
+  bool operator<(const triangle& tri) const
+  {
+    if (m_Center.X == tri.m_Center.X) return m_Center.Y < tri.m_Center.Y;
+    return m_Center.X < tri.m_Center.X;
+  }
+  
+  const triangle& operator=(const triangle &tri) const {
+    if (this != &tri) {
+      memcpy ((void*)this, &tri, sizeof(tri));
     }
-      
-      REAL GetX()	const	{ return m_Pnt.X; }
-      REAL GetY() const	{ return m_Pnt.Y; }
-      
-      void SetX(REAL x)		{ m_Pnt.X = x; }
-      void SetY(REAL y)		{ m_Pnt.Y = y; }
-      
-      const PointF& GetPoint() const		{ return m_Pnt; }
-      protected:
-      PointF	m_Pnt;
-      };
-      
-      typedef set<vertex> vertexSet;
-      typedef set<vertex>::iterator vIterator;
-      typedef set<vertex>::const_iterator cvIterator;
-      
-      ///////////////////
-      // triangle
-      
-      class triangle
-    {
-    public:
-      triangle(const triangle& tri)
-      : m_Center(tri.m_Center)
-      , m_R(tri.m_R)
-      , m_R2(tri.m_R2)
-      {
-        for (int i = 0; i < 3; i++) m_Vertices[i] = tri.m_Vertices[i];
-      }
-      triangle(const vertex * p0, const vertex * p1, const vertex * p2)
-      {
-        m_Vertices[0] = p0;
-        m_Vertices[1] = p1;
-        m_Vertices[2] = p2;
-        SetCircumCircle();
-      }
-      triangle(const vertex * pV)
-      {
-        for (int i = 0; i < 3; i++) m_Vertices[i] = pV++;
-        SetCircumCircle();
-      }
-      
-      bool operator<(const triangle& tri) const
-      {
-        if (m_Center.X == tri.m_Center.X) return m_Center.Y < tri.m_Center.Y;
-        return m_Center.X < tri.m_Center.X;
-      }
-      
-      const triangle& operator=(const triangle &tri) const {
-        if (this != &tri) {
-          memcpy ((void*)this, &tri, sizeof(tri));
-        }
-        return *this;
-      }
-      
-      const vertex * GetVertex(int i) const
-      {
-        return m_Vertices[i];
-      }
-      
-      bool IsLeftOf(cvIterator itVertex) const
-      {
-        // returns true if * itVertex is to the right of the triangle's circumcircle
-        return itVertex->GetPoint().X > (m_Center.X + m_R);
-      }
-      
-      bool CCEncompasses(cvIterator itVertex) const
-      {
-        // Returns true if * itVertex is in the triangle's circumcircle.
-        // A vertex exactly on the circle is also considered to be in the circle.
-        
-        // These next few lines look like optimisation, however in practice they are not.
-        // They even seem to slow down the algorithm somewhat.
-        // Therefore, I've commented them out.
-        
-        // First check boundary box.
-        //		REAL x = itVertex->GetPoint().X;
-        //
-        //		if (x > (m_Center.X + m_R)) return false;
-        //		if (x < (m_Center.X - m_R)) return false;
-        //
-        //		REAL y = itVertex->GetPoint().Y;
-        //
-        //		if (y > (m_Center.Y + m_R)) return false;
-        //		if (y < (m_Center.Y - m_R)) return false;
-        
-        PointF dist = itVertex->GetPoint() - m_Center;		// the distance between v and the circle center
-        REAL dist2 = dist.X * dist.X + dist.Y * dist.Y;		// squared
-        return dist2 <= m_R2;								// compare with squared radius
-      }
-    protected:
-      const vertex * m_Vertices[3];	// the three triangle vertices
-      PointF m_Center;				// center of circumcircle
-      REAL m_R;			// radius of circumcircle
-      REAL m_R2;			// radius of circumcircle, squared
-      
-      void SetCircumCircle();
-    };
-      
-      // Changed in verion 1.1: collect triangles in a multiset.
-      // In version 1.0, I used a set, preventing the creation of multiple
-      // triangles with identical center points. Therefore, more than three
-      // co-circular vertices yielded incorrect results. Thanks to Roger Labbe.
-      typedef multiset<triangle> triangleSet;
-      typedef multiset<triangle>::iterator tIterator;
-      typedef multiset<triangle>::const_iterator ctIterator;
-      
-      ///////////////////
-      // edge
-      
-      class edge
-    {
-    public:
-      edge(const edge& e)	: m_pV0(e.m_pV0), m_pV1(e.m_pV1)	{}
-      edge(const vertex * pV0, const vertex * pV1)
-      : m_pV0(pV0), m_pV1(pV1)
-      {
-      }
-      
-      bool operator<(const edge& e) const
-      {
-        if (m_pV0 == e.m_pV0) return * m_pV1 < * e.m_pV1;
-        return * m_pV0 < * e.m_pV0;
-      }
-      
-      const vertex * m_pV0;
-      const vertex * m_pV1;
-    };
-      
-      typedef set<edge> edgeSet;
-      typedef set<edge>::iterator edgeIterator;
-      typedef set<edge>::const_iterator cedgeIterator;
-      
-      ///////////////////
-      // Delaunay
-      
-      class Delaunay
-    {
-    public:
-      // Calculate the Delaunay triangulation for the given set of vertices.
-      void Triangulate(const vertexSet& vertices, triangleSet& output);
-      
-      // Put the edges of the triangles in an edgeSet, eliminating double edges.
-      // This comes in useful for drawing the triangulation.
-      void TrianglesToEdges(const triangleSet& triangles, edgeSet& edges);
-    protected:
-      void HandleEdge(const vertex * p0, const vertex * p1, edgeSet& edges);
-    };
+    return *this;
+  }
+  
+  const vertex * GetVertex(int i) const
+  {
+    return m_Vertices[i];
+  }
+  
+  bool IsLeftOf(cvIterator itVertex) const
+  {
+    // returns true if * itVertex is to the right of the triangle's circumcircle
+    return itVertex->GetPoint().X > (m_Center.X + m_R);
+  }
+  
+  bool CCEncompasses(cvIterator itVertex) const
+  {
+    // Returns true if * itVertex is in the triangle's circumcircle.
+    // A vertex exactly on the circle is also considered to be in the circle.
+    
+    // These next few lines look like optimisation, however in practice they are not.
+    // They even seem to slow down the algorithm somewhat.
+    // Therefore, I've commented them out.
+    
+    // First check boundary box.
+    //		REAL x = itVertex->GetPoint().X;
+    //
+    //		if (x > (m_Center.X + m_R)) return false;
+    //		if (x < (m_Center.X - m_R)) return false;
+    //
+    //		REAL y = itVertex->GetPoint().Y;
+    //
+    //		if (y > (m_Center.Y + m_R)) return false;
+    //		if (y < (m_Center.Y - m_R)) return false;
+    
+    PointF dist = itVertex->GetPoint() - m_Center;		// the distance between v and the circle center
+    REAL dist2 = dist.X * dist.X + dist.Y * dist.Y;		// squared
+    return dist2 <= m_R2;								// compare with squared radius
+  }
+protected:
+  const vertex * m_Vertices[3];	// the three triangle vertices
+  PointF m_Center;				// center of circumcircle
+  REAL m_R;			// radius of circumcircle
+  REAL m_R2;			// radius of circumcircle, squared
+  
+  void SetCircumCircle();
+};
+
+// Changed in verion 1.1: collect triangles in a multiset.
+// In version 1.0, I used a set, preventing the creation of multiple
+// triangles with identical center points. Therefore, more than three
+// co-circular vertices yielded incorrect results. Thanks to Roger Labbe.
+typedef multiset<triangle> triangleSet;
+typedef multiset<triangle>::iterator tIterator;
+typedef multiset<triangle>::const_iterator ctIterator;
+
+///////////////////
+// edge
+
+class edge
+{
+public:
+  edge(const edge& e)	: m_pV0(e.m_pV0), m_pV1(e.m_pV1)	{}
+  edge(const vertex * pV0, const vertex * pV1)
+  : m_pV0(pV0), m_pV1(pV1)
+  {
+  }
+  
+  bool operator<(const edge& e) const
+  {
+    if (m_pV0 == e.m_pV0) return * m_pV1 < * e.m_pV1;
+    return * m_pV0 < * e.m_pV0;
+  }
+  
+  const vertex * m_pV0;
+  const vertex * m_pV1;
+};
+
+typedef set<edge> edgeSet;
+typedef set<edge>::iterator edgeIterator;
+typedef set<edge>::const_iterator cedgeIterator;
+
+///////////////////
+// Delaunay
+
+class Delaunay
+{
+public:
+  // Calculate the Delaunay triangulation for the given set of vertices.
+  void Triangulate(const vertexSet& vertices, triangleSet& output);
+  
+  // Put the edges of the triangles in an edgeSet, eliminating double edges.
+  // This comes in useful for drawing the triangulation.
+  void TrianglesToEdges(const triangleSet& triangles, edgeSet& edges);
+protected:
+  void HandleEdge(const vertex * p0, const vertex * p1, edgeSet& edges);
+};

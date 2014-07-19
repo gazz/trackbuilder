@@ -33,6 +33,10 @@ void drawCircle(float radius, glm::vec3 color);
 void daBox(glm::vec3 from, glm::vec3 to);
 void wireBox(glm::vec3 from, glm::vec3 to);
 
+glm::vec3 minPoint(glm::vec3 *vertices, int count);
+glm::vec3 maxPoint(glm::vec3 *vertices, int count);
+
+
 @interface RedView : NSView
 @end
 

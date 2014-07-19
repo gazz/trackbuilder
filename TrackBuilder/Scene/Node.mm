@@ -3,8 +3,7 @@
 #import "utils.h"
 
 #import <GLUT/GLUT.h>
-
-#import "AppDelegate.h"
+#import "RayCast.h"
 
 
 @implementation Node {
@@ -37,13 +36,9 @@
 }
 
 
-- (AABB) aabbWorld
+- (BoundingBox *)aabbWorld
 {
-  AABB b;
-  glm::vec3 worldOrigin = self.worldOrigin;
-  b.min = glm::vec3(worldOrigin.x - _size.x/2, worldOrigin.y - _size.y/2, worldOrigin.z - _size.z/2);
-  b.max = glm::vec3(worldOrigin.x + _size.x/2, worldOrigin.y + _size.y/2, worldOrigin.z + _size.z/2);
-  return b;
+  return [[BoundingBox alloc] initWithOrigin:self.worldOrigin size:_size];
 }
 
 
@@ -190,12 +185,15 @@
   return nodesHit;
 }
 
+
 - (NodePick)pickClosestNode:(glm::vec3)ray origin:(glm::vec3)origin
 {
   NodePick pick;
   pick.distance = -1;
   
-  pick.distance = [self rayDistanceToNode:ray origin:origin];
+  
+  BoundingBox *aabb = self.aabbWorld;
+  pick.distance = rayDistanceToBox(ray, origin, aabb.min, aabb.max);
   if (pick.distance >= 0) {
     pick.node = self;
     // try to find child node closer to origin
@@ -210,59 +208,7 @@
 }
 
 
-- (CGFloat)rayDistanceToNode:(glm::vec3)ray origin:(glm::vec3)origin
-{
-  AABB aabb = self.aabbWorld;
-  
-  // the basic check if origin is within the box, then return hit
-  DHApp.numRayCalculations++;
-  
-  
-  CGFloat tmin, tmax, tymin, tymax, tzmin, tzmax;
-  
-  // calc base min & max
-  tmin = (aabb.min.x - origin.x) / ray.x;
-  tmax = (aabb.max.x - origin.x) / ray.x;
-  if (tmin > tmax) swap(tmin, tmax);
-  
-  // calc z min & max
-  tzmin = (aabb.min.z - origin.z) / ray.z;
-  tzmax = (aabb.max.z - origin.z) / ray.z;
-  if (tzmin > tzmax) swap(tzmin, tzmax);
-  
-  if (tmin > tzmax || tzmin > tmax) return -1;
-  
-  // calc 3rd dimension
-  if (tzmin > tmin) tmin = tzmin;
-  if (tzmax < tmax) tmax = tzmax;
-  
-  tymin = (aabb.min.y - origin.y) / ray.y;
-  tymax = (aabb.max.y - origin.y) / ray.y;
-  if (tymin > tymax) swap(tymin, tymax);
-  
-  if (tmin > tymax || tymin > tmax) return -1;
-  
-//  NSLog(@"tmin: %f, tmax: %f", tmin, tmax);
-  if (tmax < 0) return -1;
-  
-  ;
-  // calculate distance and validate if within range
-  //  if (tzmin > tmin) tmin = tzmin;
-  //  if (tzmax < tmax) tmax = tzmax;
-  //
-  //  if (tmin > maxDistance) || tmax < minDistance) return false;
-  //
-  //  if (r.tmin < tmin) r.tmin = tmin;
-  //  if (r.tmax > tmax) r.tmax = tmax;
-  
-  //
-  //  CGFloat tMinZ = (bounds.min.z - origin.z) / ray.z;
-  //  CGFloat tMaxZ = (bounds.max.z - origin.z) / ray.z;
-  //  if (tMinZ > tMaxZ) swap(tMinZ, tMinZ);
-  //
-  
-  return glm::length(glm::vec3(tmax, tymax, tzmax));
-}
+
 
 @end
 

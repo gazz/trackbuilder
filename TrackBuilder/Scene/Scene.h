@@ -12,6 +12,9 @@ extern NSString * const SceneNeedsRenderNotification;
 
 @property Octree *octree;
 
+@property Mesh *pickedMesh;
+@property DHPolygon *pickedPolygon;
+
 @property NSMutableDictionary *meshes;
 
 - (void)generateTerrain:(CGSize)size;

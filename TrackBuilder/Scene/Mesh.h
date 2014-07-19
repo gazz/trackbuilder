@@ -1,9 +1,13 @@
 #import "DHPolygon.h"
 #import "Octree.h"
+#import "AABB.h"
+
 
 @interface Mesh : NSObject
 
 @property glm::vec3 origin;
+
+@property (readonly) BoundingBox *obb;
 
 @property NSMutableArray *vertices;  // @[WRAP_V3(glm::vec3), ..]
 @property NSMutableArray *polygons;  // @[DHPolygon, ..]

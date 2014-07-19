@@ -2,11 +2,8 @@
 #import <glm/glm.hpp>
 #import <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#import "AABB.h"
 
-struct {
-  glm::vec3 min;
-  glm::vec3 max;
-} typedef AABB;
 
 class Triangle {
 public:
@@ -30,7 +27,7 @@ struct {
 @property NSMutableArray *childNodes;
 @property glm::vec3 origin;
 @property glm::vec3 size;
-@property (readonly) AABB aabbWorld;
+@property (readonly) BoundingBox *aabbWorld;
 @property (readonly) glm::vec3 worldOrigin;
 
 - (id)initWithParent:(Node*)node origin:(glm::vec3)origin size:(glm::vec3)size;
