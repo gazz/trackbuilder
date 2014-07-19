@@ -19,9 +19,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-  self.debugMode = MAX_DEBUG;
+  self.debugMode = NO_DEBUG;
 
   _scene = [Scene new];
+  [_scene generateScene:CGSizeZero];
   
   NSOpenGLPixelFormatAttribute attrs[] = { NSOpenGLPFADepthSize,24, 0 };
   NSOpenGLPixelFormat *pixFmt = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];

@@ -20,7 +20,7 @@ BOOL equalVerts(glm::vec3 &v1, glm::vec3 &v2) {
 }
 
 
-- (void)addTriangleWithV1:(glm::vec3)v1 v2:(glm::vec3)v2 v3:(glm::vec3)v3
+- (DHPolygon *)addTriangleWithV1:(glm::vec3)v1 v2:(glm::vec3)v2 v3:(glm::vec3)v3
 {
   // try to find indexes for vertices
   NSInteger v1Index = -1, v2Index = -1, v3Index = -1;
@@ -43,9 +43,12 @@ BOOL equalVerts(glm::vec3 &v1, glm::vec3 &v2) {
     v3Index = _vertices.count;
     [_vertices addObject:WRAP_V3(v3)];
   }
-  [_polygons addObject:[[DHPolygon alloc] initWithIndices:v1Index i2:v2Index i3:v3Index]];
+  DHPolygon *polygon = [[DHPolygon alloc] initWithIndices:v1Index i2:v2Index i3:v3Index];
+  [_polygons addObject:polygon];
   
   [self recalcOBB];
+  
+  return polygon;
 }
 
 

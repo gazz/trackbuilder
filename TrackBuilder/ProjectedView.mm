@@ -38,6 +38,8 @@
   OverlayControlsView *_controlsView;
   
   double _rayCastTime;
+  
+  CGPoint _mouseLocation;
 }
 
 
@@ -208,7 +210,7 @@
   [self drawGrid];
 
   [self.scene renderNodes];
-
+  
   [self.scene renderBounds];
   
   // as the last draw world axis on top of everything
@@ -227,25 +229,9 @@
       glVertex3f(dest.x, dest.y, dest.z);
     }
     glEnd();
-    
-    // ray
-    //  glColor3f(1, 1, 1);
-    //  glBegin(GL_LINES);
-    //  {
-    //    glm::vec3 dir = _ray.direction;
-    //    dir *= 50;
-    //    glm::vec3 dest = (_ray.origin + dir);
-    //    glVertex3f(_ray.origin.x, 0, _ray.origin.z);
-    //    glVertex3f(dest.x, 0, dest.z);
-    //  }
-    //  glEnd();
-    
-    //  glm::vec3 res = glm::vec3(2, 0, 0) * _camera.testQuat;
-    //  NSLog(@"rotated: %@", toString(res));
-    //  [self drawArrowFrom:glm::vec3(0) to:res color:glm::vec3(1,1,0) width:3];
-    //
   }
-
+  
+  [self renderUIOverlay];
   
   glFlush();
   
@@ -337,6 +323,61 @@
 }
 
 
+- (void)renderUIOverlay
+{
+  if (!self.scene.pickedNode) {
+    return;
+  }
+  NSRect sceneBounds = [ self bounds ];
+  // Calculate the aspect ratio of the view
+  const CGFloat XSize = sceneBounds.size.width, YSize = sceneBounds.size.height;
+  
+  glDisable(GL_DEPTH_TEST);
+  glMatrixMode (GL_PROJECTION);
+  
+  glLoadIdentity ();
+  
+  glOrtho (0, XSize, 0, YSize, 0, 1);
+  
+  CGFloat popupWidth = 200;
+  CGFloat popupHeight = 200;
+  CGFloat horOffset = 10;
+  CGFloat verOffset = 10;
+  
+  glm::vec2 v1(_mouseLocation.x + horOffset, _mouseLocation.y + 15);
+  glm::vec2 v2(_mouseLocation.x + popupWidth + horOffset, _mouseLocation.y + 15);
+  glm::vec2 v3(_mouseLocation.x + popupWidth + horOffset, _mouseLocation.y - popupHeight + verOffset);
+  glm::vec2 v4(_mouseLocation.x + horOffset, _mouseLocation.y - popupHeight + verOffset);
+  
+  glBegin(GL_QUADS);
+  {
+    glColor3f(.9, .9, .9);
+    
+    glVertex2f(v1.x, v1.y);
+    glVertex2f(v2.x, v2.y);
+    glVertex2f(v3.x, v3.y);
+    glVertex2f(v4.x, v4.y);
+
+  }
+  glEnd();
+
+  
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonOffset( 1.0, 1.0 );
+  glEnable(GL_POLYGON_OFFSET_LINE);
+  glBegin(GL_QUADS);
+  {
+    glColor3f(.7, .7, .7);
+
+    glVertex2f(v1.x, v1.y);
+    glVertex2f(v2.x, v2.y);
+    glVertex2f(v3.x, v3.y);
+    glVertex2f(v4.x, v4.y);
+  }
+  glEnd();
+}
+
+
 #pragma mark - input handlers
 
 -(void) keyDown:(NSEvent *)theEvent
@@ -390,7 +431,8 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-  CGPoint mouseLoc = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+  _mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];;
+  CGPoint mouseLoc = _mouseLocation;
   if (NSPointInRect(mouseLoc, self.bounds)) {
     
     if ([theEvent modifierFlags] & NSCommandKeyMask) {

@@ -3,9 +3,18 @@
 
 @implementation DHPolygon
 
--(id)initWithIndices:(NSInteger)i1 i2:(NSInteger)i2 i3:(NSInteger)i3
+- (id)init
 {
   if (self = [super init]) {
+    self.color = glm::vec3(.7, .7, .7);
+  }
+  return self;
+}
+
+
+-(id)initWithIndices:(NSInteger)i1 i2:(NSInteger)i2 i3:(NSInteger)i3
+{
+  if (self = [self init]) {
     // triangle
     _indexes = @[@(i1),@(i2),@(i3)];
   }
@@ -15,7 +24,7 @@
 
 -(id)initWithIndices:(NSInteger)i1 i2:(NSInteger)i2 i3:(NSInteger)i3 i4:(NSInteger)i4
 {
-  if (self = [super init]) {
+  if (self = [self init]) {
     // quad
     _indexes = @[@(i1),@(i2),@(i3),@(i4)];
   }

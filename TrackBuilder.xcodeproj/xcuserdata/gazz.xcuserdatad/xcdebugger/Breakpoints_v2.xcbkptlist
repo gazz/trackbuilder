@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TrackBuilder/ProjectedView.mm"
-            timestampString = "427492555.106535"
+            timestampString = "427504419.434617"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "-statisticsTextForPassedTime:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TrackBuilder/Scene/Scene.mm"
-            timestampString = "427492876.381536"
+            timestampString = "427502740.843237"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "-generateTerrain:"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "-renderNode:withTransform:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

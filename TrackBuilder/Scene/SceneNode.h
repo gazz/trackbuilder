@@ -16,6 +16,7 @@
 @property NSMutableArray *childNodes;
 
 - (id)initWithMesh:(Mesh *)mesh;
+- (id)initWithMesh:(Mesh *)mesh transform:(glm::mat4)transform;
 
 - (void)purgeOBB;
 

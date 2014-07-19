@@ -87,16 +87,16 @@
     button.title = [NSString stringWithFormat:@"Toggle Debug: %ld", DHApp.debugMode];
   }];
   
-  [self addToolbarButton:@"Generate Terrain" action:^(DHButton *button) {
-    [DHApp.scene generateTerrain:CGSizeMake(1, 1)];
+  [self addToolbarButton:@"Generate Scene" action:^(DHButton *button) {
+    [DHApp.scene generateScene:CGSizeMake(1, 1)];
   }];
   
-  [self addToolbarButton:@"Decrease detail" action:^(DHButton *button) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
-  }];
-  [self addToolbarButton:@"Increase detail" action:^(DHButton *button) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
-  }];
+//  [self addToolbarButton:@"Decrease detail" action:^(DHButton *button) {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
+//  }];
+//  [self addToolbarButton:@"Increase detail" action:^(DHButton *button) {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
+//  }];
 
 
 }

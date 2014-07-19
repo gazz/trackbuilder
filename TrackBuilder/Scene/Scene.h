@@ -24,7 +24,7 @@ extern NSString * const SceneNeedsRenderNotification;
 
 
 @interface Scene (Generation)
-- (void)generateTerrain:(CGSize)size;
+- (void)generateScene:(CGSize)size;
 @end
 
 

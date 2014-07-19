@@ -8,10 +8,18 @@
   BoundingBox *_cachedOBB;
 }
 
+
 - (id)initWithMesh:(Mesh *)mesh
 {
+  self = [self initWithMesh:mesh transform:glm::mat4()];
+  return self;
+}
+
+
+- (id)initWithMesh:(Mesh *)mesh transform:(glm::mat4)transform
+{
   if (self = [super init]) {
-    self.transform = glm::mat4();
+    self.transform = transform;
     self.mesh = mesh;
     self.childNodes = [NSMutableArray new];
   }

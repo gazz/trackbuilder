@@ -25,7 +25,6 @@ NSString * const SceneNeedsRenderNotification = @"SceneNeedsRenderNotification";
   [self.rootNode purgeOBB];
 }
 
-
 @end
 
 
@@ -150,7 +149,7 @@ static int g_polygonsChecked = 0;
       if (poly == self.pickedPolygon) {
         glColor3f(1, .7, .7);
       } else {
-        glColor3f(.7, .7, .7);
+        glColor3f(poly.color.r, poly.color.g, poly.color.b);
       }
 
       for (NSNumber *index in poly.indexes) {
@@ -178,19 +177,21 @@ static int g_polygonsChecked = 0;
     }
   }
   
-  if (DHApp.debugMode > NO_DEBUG) {
+  if (DHApp.debugMode > NO_DEBUG || self.pickedNode == node) {
     BoundingBox *nodeBB = node.obb;
     if (node.mesh) {
       [node.mesh.obb renderBBWithColor:node == self.pickedNode ? [NSColor redColor] : [NSColor cyanColor]];
     }
     
-    // calculate aabb
-    BoundingBox *aabb = [nodeBB boundingBoxForTransform:combinedTransform];
-    glPushMatrix();
-    glLoadIdentity();
-    // render
-    [aabb renderBBWithColor:node == self.pickedNode ? [NSColor redColor] : [NSColor greenColor]];
-    glPopMatrix();
+    if (DHApp.debugMode > BASIC_DEBUG) {
+      // calculate aabb
+      BoundingBox *aabb = [nodeBB boundingBoxForTransform:combinedTransform];
+      glPushMatrix();
+      glLoadIdentity();
+      // render
+      [aabb renderBBWithColor:node == self.pickedNode ? [NSColor redColor] : [NSColor greenColor]];
+      glPopMatrix();
+    }
   }
   
   for (SceneNode *childNode in node.childNodes) {
@@ -205,8 +206,8 @@ static int g_polygonsChecked = 0;
 {
   glLoadIdentity();
   
-//  [self.rootNode precalcOBB];
-  
+  [self resetScene];
+
   [self renderNode:self.rootNode withTransform:glm::mat4x4(1.0f)];
 }
 
@@ -223,12 +224,22 @@ static int g_polygonsChecked = 0;
 
 @implementation Scene (Generation)
 
-- (void)generateTerrain:(CGSize)size
+- (void)generateScene:(CGSize)size
 {
-//  [self.rootNode.childNodes removeAllObjects];
+  [self.rootNode.childNodes removeAllObjects];
+  
+  [self generateCarSuspension];
   
 //  [self generateNodeWith2Pyramids];
-//  return;
+
+//  [self generateTerrain:size];
+
+  return;
+}
+
+
+- (void)generateTerrain:(CGSize)size
+{
   NSLog(@"regenerating terrain of size: %@", NSStringFromSize(size));
   
   // generate random terrain and add to the scene
@@ -282,8 +293,6 @@ static int g_polygonsChecked = 0;
   [terrainNode.childNodes addObject:pyramidNode];
 //  [self.rootNode.childNodes addObject:pyramidNode];
   
-  [self resetScene];
-  
   [[NSNotificationCenter defaultCenter] postNotificationName:SceneNeedsRenderNotification object:nil];
 }
 
@@ -302,6 +311,27 @@ static int g_polygonsChecked = 0;
   
   [self.rootNode.childNodes addObject:containerNode];
 }
+
+//+ (instancetype)springWithLength:(CGFloat)length coils:(CGFloat)coils thickness:(CGFloat)thickness;
+//+ (instancetype)shockWithLength:(CGFloat)length thickness:(CGFloat)thickness;
+//+ (instancetype)bar:(CGFloat)length thickness:(CGFloat)thickness;
+//+ (instancetype)spindle:(CGFloat)diameter thickness:(CGFloat)thickness;
+
+- (void)generateCarSuspension
+{
+  [self.rootNode.childNodes addObject:[[SceneNode alloc]
+      initWithMesh:[Mesh springWithLength:1 coils:3 thickness:.1] transform:glm::translate(glm::mat4(), glm::vec3(0, 0, 0))]];
+
+  [self.rootNode.childNodes addObject:[[SceneNode alloc]
+      initWithMesh:[Mesh bar:2 thickness:.06] transform:glm::translate(glm::mat4(), glm::vec3(2, 0, 0))]];
+  
+  [self.rootNode.childNodes addObject:[[SceneNode alloc]
+      initWithMesh:[Mesh shockWithLength:2 thickness:.1] transform:glm::translate(glm::mat4(), glm::vec3(1, 0, 0))]];
+  
+  [self.rootNode.childNodes addObject:[[SceneNode alloc]
+      initWithMesh:[Mesh hub:.3 thickness:.2] transform:glm::translate(glm::mat4(), glm::vec3(3, 0, 0))]];
+}
+
 
 @end
 
